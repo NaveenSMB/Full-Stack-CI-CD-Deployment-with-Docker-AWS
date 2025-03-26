@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Frontend</title>
+    <script>
+        async function checkBackend() {
+            try {
+                let response = await fetch("http://localhost:5000/api"); // Call backend API
+                if (response.ok) {
+                    document.getElementById("status").innerText = "Backend is Online"; // Update UI
+                } else {
+                    throw new Error("Backend Error");
+                }
+            } catch {
+                document.getElementById("status").innerText = "Backend is Down";
+                alert("Backend is not reachable!");
+            }
+        }
+        setInterval(checkBackend, 3000); // Check every 3 seconds
+    </script>
+</head>
+<body>
+    <h1>Simple Frontend</h1>
+    <p id="status">Checking Backend...</p>
+</body>
+</html>
+

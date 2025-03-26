@@ -1,0 +1,25 @@
+- name: Install Docker and Deploy App
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present  # Ensure Docker is installed
+
+    - name: Install Docker Compose
+      apt:
+        name: docker-compose
+        state: present  # Ensure Docker Compose is installed
+
+    - name: Remove old containers and images
+      shell: docker system prune -a -f  # Clean up old images
+
+    - name: Clone Repository
+      git:
+        repo: 'https://github.com/NaveenSMB/Full-Stack-CI-CD-Deployment-with-Docker-AWS'
+        dest: /home/ubuntu/app  # Clone project on EC2
+
+    - name: Run Docker Compose
+      shell: cd /home/ubuntu/app && docker-compose up -d  # Deploy application
+
